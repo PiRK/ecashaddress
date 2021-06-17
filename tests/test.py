@@ -19,13 +19,13 @@ class TestConversion(unittest.TestCase):
 
     def test_to_cash_p2sh(self):
         self.assertEqual(convert.to_cash_address('3CWFddi6m4ndiGyKqzYvsFYagqDLPVMTzC'),
-                         'bitcoincash:ppm2qsznhks23z7629mms6s4cwef74vcwvn0h829pq')
+                         'ecash:ppm2qsznhks23z7629mms6s4cwef74vcwv2zrv3l8h')
         self.assertEqual(convert.to_cash_address('bitcoincash:ppm2qsznhks23z7629mms6s4cwef74vcwvn0h829pq'),
                          'bitcoincash:ppm2qsznhks23z7629mms6s4cwef74vcwvn0h829pq')
 
     def test_to_cash_p2pkh(self):
         self.assertEqual(convert.to_cash_address('155fzsEBHy9Ri2bMQ8uuuR3tv1YzcDywd4'),
-                         'bitcoincash:qqkv9wr69ry2p9l53lxp635va4h86wv435995w8p2h')
+                         'ecash:qqkv9wr69ry2p9l53lxp635va4h86wv435ugq9umvq')
         self.assertEqual(convert.to_cash_address('bitcoincash:qqkv9wr69ry2p9l53lxp635va4h86wv435995w8p2h'),
                          'bitcoincash:qqkv9wr69ry2p9l53lxp635va4h86wv435995w8p2h')
 
@@ -43,13 +43,13 @@ class TestConversion(unittest.TestCase):
 
     def test_to_cash_p2sh_testnet(self):
         self.assertEqual(convert.to_cash_address('2MwikwR6hoVijCmr1u8UgzFMHFP6rpQyRvP'),
-                         'bchtest:pqc3tyspqwn95retv5k3c5w4fdq0cxvv95u36gfk00')
+                         'ectest:pqc3tyspqwn95retv5k3c5w4fdq0cxvv95895yhkd4')
         self.assertEqual(convert.to_cash_address('bchtest:pqc3tyspqwn95retv5k3c5w4fdq0cxvv95u36gfk00'),
                          'bchtest:pqc3tyspqwn95retv5k3c5w4fdq0cxvv95u36gfk00')
 
     def test_to_cash_p2pkh_testnet(self):
         self.assertEqual(convert.to_cash_address('mqp7vM7eU7Vu9NPH1V7s7pPg5FFBMo6SWK'),
-                         'bchtest:qpc0qh2xc3tfzsljq79w37zx02kwvzm4gydm222qg8')
+                         'ectest:qpc0qh2xc3tfzsljq79w37zx02kwvzm4gyk0yx5q2a')
         self.assertEqual(convert.to_cash_address('bchtest:qpc0qh2xc3tfzsljq79w37zx02kwvzm4gydm222qg8'),
                          'bchtest:qpc0qh2xc3tfzsljq79w37zx02kwvzm4gydm222qg8')
 
@@ -68,7 +68,10 @@ class TestConversion(unittest.TestCase):
         addr = Address.from_string(legacy_address)
         default_prefix = addr.prefix
         self.assertEqual(default_prefix, Address.MAINNET_PREFIX)
-        self.assertEqual(addr.cash_address(),
+
+        self.assertEqual(addr.cash_address(prefix='ecash'),
+                         'ecash:qr4pqy6q4cy2d50zpaek57nnrja7289fks00weqyz7')
+        self.assertEqual(addr.cash_address(prefix='bitcoincash'),
                          'bitcoincash:qr4pqy6q4cy2d50zpaek57nnrja7289fkskz6jm7yf')
         self.assertEqual(addr.cash_address(prefix='abc'),
                          'abc:qr4pqy6q4cy2d50zpaek57nnrja7289fksqt4c50w9')

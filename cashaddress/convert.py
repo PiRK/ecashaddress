@@ -22,8 +22,9 @@ class Address:
             ('P2PKH-TESTNET', 0, True)
         ]
     }
-    MAINNET_PREFIX = 'bitcoincash'
-    TESTNET_PREFIX = 'bchtest'
+    MAINNET_PREFIX = 'ecash'
+    TESTNET_PREFIX = 'ectest'
+    ALT_TESTNET_PREFIX = 'bchtest'
 
     def __init__(self, version, payload, prefix=None):
         self.version = version
@@ -113,7 +114,7 @@ class Address:
             raise InvalidAddress('Bad cash address checksum')
         converted = convertbits(decoded, 5, 8)
         version = Address._address_type('cash', converted[0])[0]
-        if prefix == Address.TESTNET_PREFIX:
+        if prefix in [Address.TESTNET_PREFIX, Address.ALT_TESTNET_PREFIX]:
             version += '-TESTNET'
         payload = converted[1:-6]
         return Address(version, payload, prefix)
