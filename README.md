@@ -1,22 +1,21 @@
-[![Build Status](https://travis-ci.org/oskyk/cashaddress.svg?branch=master)](https://travis-ci.org/oskyk/cashaddress)
-[![Coverage Status](https://coveralls.io/repos/github/oskyk/cashaddress/badge.svg)](https://coveralls.io/github/oskyk/cashaddress)
 
-# cashaddress
-`cashaddress` is python library which is able to convert legacy BCH address to new format.
+# ecashaddress
+`ecashaddress` is python library which is able to convert legacy bitcoin addresses to the cashaddress format,
+and convert between various cashaddr prefixes.
 
 # Installation
 To install this library and its dependencies use:
 
-    pip install cashaddress
-    
+    pip install ecashaddress
+
 # Usage examples
 The first thing you need to do is import the library via:
 
 ```python
-from cashaddress import convert
+from ecashaddress import convert
 ```
 ## Converting address
-**It does not matter if you use legacy or new address as input.**
+**It does not matter if you use legacy or cashaddress as input.**
 
 Then you can convert your address via:
 

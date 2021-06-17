@@ -1,19 +1,25 @@
 from distutils.core import setup
 from setuptools import find_packages
 
-setup(name='cashaddress',
-      version='1.0.6',
+
+def get_readme():
+    """Returns content of README.md file"""
+    dirname = os.path.dirname(os.path.abspath(__file__))
+    filename = os.path.join(dirname, "README.md")
+    with open(filename, "r", encoding="utf-8") as fp:
+        long_description = fp.read()
+    return long_description
+
+
+setup(name='ecashaddress',
+      version='0.0.1',
       packages=find_packages(),
-      description='Python tool for converty bitcoin cash legacy addresses',
-      author='Oskar Hladky',
-      author_email='oskyks1@gmail.com',
-      url='https://github.com/oskyk/cashaddress',
-      download_url='https://github.com/oskyk/cashaddress/archive/1.0.4.tar.gz',
-      python_requires='>=2.7',
-      keywords=['bitcoincash', 'bch', 'address', 'cashaddress', 'legacy', 'convert'],
+      description='Python library for converting cashaddr',
+      url='https://github.com/PiRK/ecashaddress/',
+      python_requires='>=3.7',
+      keywords=['ecash', 'bcha', 'bitcoincash', 'bch', 'address', 'cashaddress', 'legacy', 'convert'],
       classifiers=[
-          'Programming Language :: Python :: 2.7',
           'Programming Language :: Python :: 3',
-          'Programming Language :: Python :: 3.6',
       ],
+    long_description=get_readme()
 )
