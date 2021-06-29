@@ -13,7 +13,7 @@ def get_readme():
 
 
 setup(name='ecashaddress',
-      version='0.0.1',
+      version='1.0.0',
       packages=find_packages(),
       entry_points={'console_scripts': ['ecashconvert=ecashaddress.__main__:main',]},
       description='Python library and command line tool for converting cashaddr',
