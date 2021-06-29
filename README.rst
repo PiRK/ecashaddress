@@ -29,6 +29,7 @@ The first thing you need to do is import the library via:
 .. code:: python
 
     from ecashaddress import convert
+    from ecashaddress.convert import Address
 
 Converting address
 ~~~~~~~~~~~~~~~~~~
@@ -39,13 +40,19 @@ Then you can convert your address via:
 
 .. code:: python
 
-    address = convert.to_cash_address('155fzsEBHy9Ri2bMQ8uuuR3tv1YzcDywd4')
+    address = Address.from_string("155fzsEBHy9Ri2bMQ8uuuR3tv1YzcDywd4").cash_address()
 
 or
 
 .. code:: python
 
-    address = convert.to_legacy_address('bitcoincash:qqkv9wr69ry2p9l53lxp635va4h86wv435995w8p2h')
+    address = Address.from_string("ecash:qqkv9wr69ry2p9l53lxp635va4h86wv435ugq9umvq").legacy_address()
+
+You can convert between different *CashAddr* prefixes:
+
+.. code:: python
+
+    address = Address.from_string("ecash:qqkv9wr69ry2p9l53lxp635va4h86wv435ugq9umvq").cash_address(prefix="foobar")
 
 Validating address
 ~~~~~~~~~~~~~~~~~~
@@ -60,7 +67,7 @@ or
 
 .. code:: python
 
-    convert.is_valid('bitcoincash:qqkv9wr69ry2p9l53lxp635va4h86wv435995w8p2h')
+    convert.is_valid('ecash:qqkv9wr69ry2p9l53lxp635va4h86wv435ugq9umvq')
 
 As a command line tool
 ----------------------
