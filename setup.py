@@ -4,9 +4,9 @@ from setuptools import find_packages
 
 
 def get_readme():
-    """Returns content of README.md file"""
+    """Returns content of README.rst file"""
     dirname = os.path.dirname(os.path.abspath(__file__))
-    filename = os.path.join(dirname, "README.md")
+    filename = os.path.join(dirname, "README.rst")
     with open(filename, "r", encoding="utf-8") as fp:
         long_description = fp.read()
     return long_description
