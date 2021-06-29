@@ -1,7 +1,7 @@
 import unittest
 
-from ecashaddress import convert
-from ecashaddress.convert import Address, InvalidAddress
+from .. import convert
+from ..convert import Address, InvalidAddress
 
 
 class TestConversion(unittest.TestCase):
