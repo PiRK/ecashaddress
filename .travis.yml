@@ -12,7 +12,7 @@ cache: pip
 before_install:
   - pip install -r test_requirements.txt
 script:
-  - pytest --cov=cashaddress
+  - pytest --cov=ecashaddress
 after_success:
   - coveralls
 
