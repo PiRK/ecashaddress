@@ -68,10 +68,30 @@ To output a *CashAddr* with a different prefix, use the `--prefix` option:
 
 # Development
 
-1. Clone the repository
-2. Create virtualenv
-4. Do your thing
-5. Run tests
+1. Fork the repository on github.
+2. Clone your fork of the repository.
+3. Add the source repository as a remote.
+```
+git remote add upstream git@github.com:PiRK/ecashaddress.git
+git fetch upstream
+```
+4. Make sure your master branch is up-to-date with the upstream master.
+```
+git checkout master
+git pull upstream master
+```
+5. Create a local development branch, and add commits to it.
+   Run the tests after each change, before `git commit`.
+```
+git checkout -b my_dev_branch
+# do your stuff
+python ecashaddress.tests.test
+git commit
+```
+6. Push you branch to your fork of the repository.
+```
+git push --set-upstream origin my_dev_branch
+```
+7. Create a pull request to the upstream repository.
 
 
-    pytest
