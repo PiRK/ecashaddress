@@ -6,8 +6,7 @@ ecashaddress
 bitcoin addresses to the cashaddress format, and convert between various
 cashaddr prefixes.
 
-It also provides a command line tool for converting address formats:
-``ecashconvert``
+It also provides a command line tool for working with address formats.
 
 Installation
 ============
@@ -34,9 +33,7 @@ The first thing you need to do is import the library via:
 Converting address
 ~~~~~~~~~~~~~~~~~~
 
-**It does not matter if you use legacy or cashaddress as input.**
-
-Then you can convert your address via:
+You can convert your address via:
 
 .. code:: python
 
