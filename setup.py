@@ -1,7 +1,9 @@
 import os
+import sys
 from distutils.core import setup
 from setuptools import find_packages
 
+PROJECT = "ecashaddress"
 
 def get_readme():
     """Returns content of README.rst file"""
@@ -12,8 +14,18 @@ def get_readme():
     return long_description
 
 
-setup(name='ecashaddress',
-      version='1.1.0',
+def get_version():
+    """Returns current version number from _version.py file"""
+    dirname = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), PROJECT)
+    sys.path.insert(0, dirname)
+    import _version
+    sys.path = sys.path[1:]
+    return _version.version
+
+
+setup(name=PROJECT,
+      version=get_version(),
       packages=find_packages(),
       entry_points={'console_scripts': ['ecashconvert=ecashaddress.__main__:main',]},
       description='Python library and command line tool for converting cashaddr',
