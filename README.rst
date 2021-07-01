@@ -69,6 +69,16 @@ or
 
     convert.is_valid('ecash:qqkv9wr69ry2p9l53lxp635va4h86wv435ugq9umvq')
 
+Guessing a prefix
+~~~~~~~~~~~~~~~~~
+
+You can guess the prefix for a cash address. This only works for a short list of
+commonly used prefixes, such as "ecash", "bitcoincash", "simpleledger" or "etoken".
+
+.. code:: python
+
+    convert.guess_prefix('qqkv9wr69ry2p9l53lxp635va4h86wv435ugq9umvq')
+
 As a command line tool
 ----------------------
 

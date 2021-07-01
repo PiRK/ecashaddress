@@ -165,12 +165,13 @@ def is_valid(address):
 
 
 def guess_prefix(cashaddress: str) -> str:
-    """Return the lower-case prefix.
+    f"""Return the lower-case prefix.
 
     If the prefix is not specified in the input address, a list of usual
     prefixes is tried and this function returns the first one that matches.
+    The following prefixes are tried, in this order: {KNOWN_PREFIXES}.
 
-    If the specified prefix does not match the checksum, an InvalidAddress
+    If prefix is specified but does not match the checksum, an InvalidAddress
     error is raised.
     If the prefix is omitted and no known prefix matches the checksum, an
     empty string is returned.
