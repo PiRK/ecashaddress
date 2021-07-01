@@ -40,19 +40,19 @@ Then you can convert your address via:
 
 .. code:: python
 
-    address = Address.from_string("155fzsEBHy9Ri2bMQ8uuuR3tv1YzcDywd4").cash_address()
+    address = Address.from_string("155fzsEBHy9Ri2bMQ8uuuR3tv1YzcDywd4").to_cash_address()
 
 or
 
 .. code:: python
 
-    address = Address.from_string("ecash:qqkv9wr69ry2p9l53lxp635va4h86wv435ugq9umvq").legacy_address()
+    address = Address.from_string("ecash:qqkv9wr69ry2p9l53lxp635va4h86wv435ugq9umvq").to_legacy_address()
 
 You can convert between different *CashAddr* prefixes:
 
 .. code:: python
 
-    address = Address.from_string("ecash:qqkv9wr69ry2p9l53lxp635va4h86wv435ugq9umvq").cash_address(prefix="foobar")
+    address = Address.from_string("ecash:qqkv9wr69ry2p9l53lxp635va4h86wv435ugq9umvq").to_cash_address(prefix="foobar")
 
 Validating address
 ~~~~~~~~~~~~~~~~~~
@@ -69,6 +69,16 @@ or
 
     convert.is_valid('ecash:qqkv9wr69ry2p9l53lxp635va4h86wv435ugq9umvq')
 
+Guessing a prefix
+~~~~~~~~~~~~~~~~~
+
+You can guess the prefix for a cash address. This only works for a short list of
+commonly used prefixes, such as "ecash", "bitcoincash", "simpleledger" or "etoken".
+
+.. code:: python
+
+    convert.guess_prefix('qqkv9wr69ry2p9l53lxp635va4h86wv435ugq9umvq')
+
 As a command line tool
 ----------------------
 
@@ -79,7 +89,7 @@ console:
 
 ::
 
-    ecashconvert --help
+    ecashaddress --help
 
 If this is not the case, an alternative is to run the library the
 following way:
@@ -95,14 +105,21 @@ prefix.
 
 ::
 
-    ecashconvert bitcoincash:qq3dmep4sj4u5nt8v2qaa3ea7kh7km8j05dhde02hg
+    ecashaddress convert bitcoincash:qq3dmep4sj4u5nt8v2qaa3ea7kh7km8j05dhde02hg
 
 To output a *CashAddr* with a different prefix, use the ``--prefix``
 option:
 
 ::
 
-    ecashconvert bchtest:qq3dmep4sj4u5nt8v2qaa3ea7kh7km8j05f9f7das5 --prefix ectest
+    ecashaddress convert bchtest:qq3dmep4sj4u5nt8v2qaa3ea7kh7km8j05f9f7das5 --prefix ectest
+
+The tool also lets you guess the prefix from an address without prefix, if the
+prefix is in a short list of commonly used prefixes:
+
+::
+
+    ecashaddress guessprefix qr4pqy6q4cy2d50zpaek57nnrja7289fksp38mkrxf
 
 Development
 ===========
@@ -130,7 +147,7 @@ Development
 
        git checkout -b my_dev_branch
        # do your stuff
-       python ecashaddress.tests.test
+       python -m ecashaddress.tests.test
        git commit
 
 6. Push you branch to your fork of the repository.

@@ -27,7 +27,13 @@ def get_version():
 setup(name=PROJECT,
       version=get_version(),
       packages=find_packages(),
-      entry_points={'console_scripts': ['ecashconvert=ecashaddress.__main__:main',]},
+      entry_points={
+          'console_scripts': [
+              'ecashconvert=ecashaddress.__main__:convert',
+              'ecashaddress=ecashaddress.__main__:main'
+          ]
+
+      },
       description='Python library and command line tool for converting cashaddr',
       url='https://github.com/PiRK/ecashaddress/',
       python_requires='>=3.7',

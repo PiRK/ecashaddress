@@ -1,6 +1,15 @@
+from __future__ import annotations
+
+from typing import Optional
+import sys
+import warnings
+
 from ecashaddress.crypto import *
 from ecashaddress.base58 import b58decode_check, b58encode_check
-import sys
+
+
+KNOWN_PREFIXES = ["ecash", "bitcoincash", "etoken", "simpleledger",
+                  "ectest", "bchtest", "ecregtest", "bchreg"]
 
 
 class InvalidAddress(Exception):
@@ -41,10 +50,24 @@ class Address:
         return 'version: {}\npayload: {}\nprefix: {}'.format(self.version, self.payload, self.prefix)
 
     def legacy_address(self):
+        warnings.warn(
+            "legacy_address is deprecated, use to_legacy_address instead",
+            DeprecationWarning
+        )
+        return self.to_legacy_address()
+
+    def to_legacy_address(self) -> str:
         version_int = Address._address_type('legacy', self.version)[1]
         return b58encode_check(Address.code_list_to_string([version_int] + self.payload))
 
     def cash_address(self, prefix=None):
+        warnings.warn(
+            "cash_address is deprecated, use to_cash_address instead",
+            DeprecationWarning
+        )
+        return self.to_cash_address(prefix)
+
+    def to_cash_address(self, prefix: Optional[str] = None) -> str:
         prefix = prefix if prefix is not None else self.prefix
         self._check_case(prefix)
         is_uppercase = prefix == prefix.upper()
@@ -77,18 +100,18 @@ class Address:
         raise InvalidAddress('Could not determine address version')
 
     @staticmethod
-    def from_string(address_string):
+    def from_string(address_string: str) -> Address:
         try:
             address_string = str(address_string)
         except Exception:
             raise InvalidAddress('Expected string as input')
         if ':' not in address_string:
-            return Address._legacy_string(address_string)
+            return Address.from_legacy_string(address_string)
         else:
-            return Address._cash_string(address_string)
+            return Address.from_cash_string(address_string)
 
     @staticmethod
-    def _legacy_string(address_string):
+    def from_legacy_string(address_string: str) -> Address:
         try:
             decoded = bytearray(b58decode_check(address_string))
         except ValueError:
@@ -100,7 +123,7 @@ class Address:
         return Address(version, payload)
 
     @staticmethod
-    def _cash_string(address_string):
+    def from_cash_string(address_string: str) -> Address:
         Address._check_case(address_string)
         address_string = address_string.lower()
         colon_count = address_string.count(':')
@@ -126,11 +149,11 @@ class Address:
 
 
 def to_cash_address(address):
-    return Address.from_string(address).cash_address()
+    return Address.from_string(address).to_cash_address()
 
 
 def to_legacy_address(address):
-    return Address.from_string(address).legacy_address()
+    return Address.from_string(address).to_legacy_address()
 
 
 def is_valid(address):
@@ -139,3 +162,38 @@ def is_valid(address):
         return True
     except InvalidAddress:
         return False
+
+
+def guess_prefix(cashaddress: str) -> str:
+    f"""Return the lower-case prefix.
+
+    If the prefix is not specified in the input address, a list of usual
+    prefixes is tried and this function returns the first one that matches.
+    The following prefixes are tried, in this order: {KNOWN_PREFIXES}.
+
+    If prefix is specified but does not match the checksum, an InvalidAddress
+    error is raised.
+    If the prefix is omitted and no known prefix matches the checksum, an
+    empty string is returned.
+    """
+    if ':' in cashaddress:
+        try:
+            addr = Address.from_cash_string(cashaddress)
+        except InvalidAddress:
+            raise
+        else:
+            return addr.prefix
+
+    known_prefixes = []
+    for prefix in KNOWN_PREFIXES:
+        known_prefixes.append(prefix.lower())
+        known_prefixes.append(prefix.upper())
+
+    for prefix in known_prefixes:
+        try:
+            Address.from_cash_string(prefix + ":" + cashaddress)
+        except InvalidAddress:
+            pass
+        else:
+            return prefix
+    return ""
