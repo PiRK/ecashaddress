@@ -3,6 +3,7 @@ from typing import Sequence
 import warnings
 
 from .convert import Address, guess_prefix, KNOWN_PREFIXES
+from . import version
 
 
 def convert():
@@ -37,6 +38,8 @@ def main():
     """
     parser = argparse.ArgumentParser(
         description='Tools for working with cash addresses')
+    parser.add_argument("-v", "--version", help="Print the version number",
+                        action="store_true")
     subparsers = parser.add_subparsers(dest='command')
 
     convert_parser = subparsers.add_parser(
@@ -57,6 +60,10 @@ def main():
         "address", help="Input cash address without prefix.")
 
     args = parser.parse_args()
+    if args.version:
+        print(version)
+        return
+
     if args.command == "convert":
         _convert(args.input_addresses, args.prefix, args.legacy)
     elif args.command == "guessprefix":
