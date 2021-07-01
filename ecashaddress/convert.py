@@ -9,7 +9,7 @@ from ecashaddress.base58 import b58decode_check, b58encode_check
 
 
 KNOWN_PREFIXES = ["ecash", "bitcoincash", "etoken", "simpleledger",
-                  "ectest", "bchtest", "ecreg", "bchreg"]
+                  "ectest", "bchtest", "ecregtest", "bchreg"]
 
 
 class InvalidAddress(Exception):

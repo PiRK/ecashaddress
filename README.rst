@@ -114,6 +114,13 @@ option:
 
     ecashaddress convert bchtest:qq3dmep4sj4u5nt8v2qaa3ea7kh7km8j05f9f7das5 --prefix ectest
 
+The tool also lets you guess the prefix from an address without prefix, if the
+prefix is in a short list of commonly used prefixes:
+
+::
+
+    ecashaddress guessprefix qr4pqy6q4cy2d50zpaek57nnrja7289fksp38mkrxf
+
 Development
 ===========
 

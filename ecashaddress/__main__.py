@@ -2,12 +2,12 @@ import argparse
 from typing import Sequence
 import warnings
 
-from .convert import Address
+from .convert import Address, guess_prefix, KNOWN_PREFIXES
 
 
 def convert():
     """This function is the entry point defined in setup.py for the command
-    line tools ecashconvert.
+    line ecashconvert.
     """
     warnings.warn(
         "`ecashconvert` is deprecated, use `ecashaddress convert` instead",
@@ -33,25 +33,36 @@ def _convert(input_addresses: Sequence[str], prefix: str, is_legacy: bool):
 
 def main():
     """This function is the entry point defined in setup.py for the command
-    line tools ecashaddress.
+    line ecashaddress.
     """
     parser = argparse.ArgumentParser(
         description='Tools for working with cash addresses')
     subparsers = parser.add_subparsers(dest='command')
+
     convert_parser = subparsers.add_parser(
         'convert', help = "Convert eCash address formats")
     convert_parser.add_argument(
         "input_addresses", help="Input addresses to be converted.", nargs="+")
     group = convert_parser.add_mutually_exclusive_group()
-    group.add_argument("--prefix", help="Output cashaddr prefix.",
+    group.add_argument("--prefix", help="Output CashAddr prefix.",
                        default="ecash")
     group.add_argument("--legacy", help="Convert to legacy BTC address.",
                        action="store_true")
 
+    guessprefix_parser = subparsers.add_parser(
+        'guessprefix',
+        help=f"Guess the prefix from a CashAddr address, by trying a list of"
+             f" commonly used prefixes: {', '.join(KNOWN_PREFIXES)}.")
+    guessprefix_parser.add_argument(
+        "address", help="Input cash address without prefix.")
+
     args = parser.parse_args()
     if args.command == "convert":
         _convert(args.input_addresses, args.prefix, args.legacy)
-
+    elif args.command == "guessprefix":
+        print(guess_prefix(args.address))
+    elif args.command is None:
+        parser.print_help()
 
 
 if __name__ == '__main__':
