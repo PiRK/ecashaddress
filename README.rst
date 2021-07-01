@@ -89,7 +89,7 @@ console:
 
 ::
 
-    ecashconvert --help
+    ecashaddress --help
 
 If this is not the case, an alternative is to run the library the
 following way:
@@ -105,14 +105,14 @@ prefix.
 
 ::
 
-    ecashconvert bitcoincash:qq3dmep4sj4u5nt8v2qaa3ea7kh7km8j05dhde02hg
+    ecashaddress convert bitcoincash:qq3dmep4sj4u5nt8v2qaa3ea7kh7km8j05dhde02hg
 
 To output a *CashAddr* with a different prefix, use the ``--prefix``
 option:
 
 ::
 
-    ecashconvert bchtest:qq3dmep4sj4u5nt8v2qaa3ea7kh7km8j05f9f7das5 --prefix ectest
+    ecashaddress convert bchtest:qq3dmep4sj4u5nt8v2qaa3ea7kh7km8j05f9f7das5 --prefix ectest
 
 Development
 ===========
