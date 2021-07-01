@@ -1,6 +1,9 @@
+from __future__ import annotations
+
+import sys
+
 from ecashaddress.crypto import *
 from ecashaddress.base58 import b58decode_check, b58encode_check
-import sys
 
 
 class InvalidAddress(Exception):
@@ -77,18 +80,18 @@ class Address:
         raise InvalidAddress('Could not determine address version')
 
     @staticmethod
-    def from_string(address_string):
+    def from_string(address_string: str) -> Address:
         try:
             address_string = str(address_string)
         except Exception:
             raise InvalidAddress('Expected string as input')
         if ':' not in address_string:
-            return Address._legacy_string(address_string)
+            return Address.from_legacy_string(address_string)
         else:
-            return Address._cash_string(address_string)
+            return Address.from_cash_string(address_string)
 
     @staticmethod
-    def _legacy_string(address_string):
+    def from_legacy_string(address_string: str) -> Address:
         try:
             decoded = bytearray(b58decode_check(address_string))
         except ValueError:
@@ -100,7 +103,7 @@ class Address:
         return Address(version, payload)
 
     @staticmethod
-    def _cash_string(address_string):
+    def from_cash_string(address_string: str) -> Address:
         Address._check_case(address_string)
         address_string = address_string.lower()
         colon_count = address_string.count(':')
