@@ -15,7 +15,7 @@ MAJOR = 1
 MINOR = 1
 MICRO = 0
 
-RELEV: str = "dev"
+RELEV: str = "final"
 """RELEV must be 'dev' on the master branch, and can be "alpha", "beta",
 "candidate" or "final" on a (pre)release branch."""
 
