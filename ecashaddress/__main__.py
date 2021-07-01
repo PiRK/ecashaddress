@@ -3,7 +3,7 @@ import argparse
 from .convert import Address
 
 
-def main():
+def convert():
     """This function is the entry point defined in setup.py for the command
     line tools ecashconvert.
     """
@@ -25,4 +25,4 @@ def main():
 if __name__ == '__main__':
     # This is the entry point if the package is executed via the
     # `python -m ecashaddress` command
-    main()
+    convert()
