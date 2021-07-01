@@ -24,22 +24,22 @@ def get_version():
     return _version.version
 
 
-setup(name=PROJECT,
-      version=get_version(),
-      packages=find_packages(),
-      entry_points={
-          'console_scripts': [
-              'ecashconvert=ecashaddress.__main__:convert',
-              'ecashaddress=ecashaddress.__main__:main'
-          ]
-
-      },
-      description='Python library and command line tool for converting cashaddr',
-      url='https://github.com/PiRK/ecashaddress/',
-      python_requires='>=3.7',
-      keywords=['ecash', 'bcha', 'bitcoincash', 'bch', 'address', 'cashaddress', 'legacy', 'convert'],
-      classifiers=[
-          'Programming Language :: Python :: 3',
-      ],
+setup(
+    name=PROJECT,
+    version=get_version(),
+    packages=find_packages(),
+    entry_points={
+        'console_scripts': [
+            'ecashconvert=ecashaddress.__main__:convert',
+            'ecashaddress=ecashaddress.__main__:main'
+        ]
+    },
+    description='Python library and command line tool for converting cashaddr',
+    url='https://github.com/PiRK/ecashaddress/',
+    python_requires='>=3.7',
+    keywords=['ecash', 'bcha', 'bitcoincash', 'bch', 'address', 'cashaddress', 'legacy', 'convert'],
+    classifiers=[
+        'Programming Language :: Python :: 3',
+    ],
     long_description=get_readme()
 )
