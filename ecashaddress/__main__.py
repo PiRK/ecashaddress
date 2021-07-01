@@ -17,9 +17,9 @@ def main():
 
     for addr in args.input_addresses:
         if args.legacy:
-            print(Address.from_string(addr).legacy_address())
+            print(Address.from_string(addr).to_legacy_address())
         else:
-            print(Address.from_string(addr).cash_address(args.prefix))
+            print(Address.from_string(addr).to_cash_address(args.prefix))
 
 
 if __name__ == '__main__':

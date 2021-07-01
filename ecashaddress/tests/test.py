@@ -69,21 +69,21 @@ class TestConversion(unittest.TestCase):
         default_prefix = addr.prefix
         self.assertEqual(default_prefix, Address.MAINNET_PREFIX)
 
-        self.assertEqual(addr.cash_address(prefix='ecash'),
+        self.assertEqual(addr.to_cash_address(prefix='ecash'),
                          'ecash:qr4pqy6q4cy2d50zpaek57nnrja7289fks00weqyz7')
-        self.assertEqual(addr.cash_address(prefix='bitcoincash'),
+        self.assertEqual(addr.to_cash_address(prefix='bitcoincash'),
                          'bitcoincash:qr4pqy6q4cy2d50zpaek57nnrja7289fkskz6jm7yf')
-        self.assertEqual(addr.cash_address(prefix='abc'),
+        self.assertEqual(addr.to_cash_address(prefix='abc'),
                          'abc:qr4pqy6q4cy2d50zpaek57nnrja7289fksqt4c50w9')
-        self.assertEqual(addr.cash_address(prefix='simpleledger'),
+        self.assertEqual(addr.to_cash_address(prefix='simpleledger'),
                          'simpleledger:qr4pqy6q4cy2d50zpaek57nnrja7289fks6e3fw76h')
 
         regtest_address = 'regtest:qr4pqy6q4cy2d50zpaek57nnrja7289fksjm6es9se'
         addr2 = Address.from_string(regtest_address)
-        self.assertEqual(addr2.legacy_address(), legacy_address)
+        self.assertEqual(addr2.to_legacy_address(), legacy_address)
         # The prefix defaults to the one in the input string.
         self.assertEqual(addr2.prefix, 'regtest')
-        self.assertEqual(addr2.cash_address(), regtest_address)
+        self.assertEqual(addr2.to_cash_address(), regtest_address)
 
     def test_prefix_case(self):
         with self.assertRaises(InvalidAddress):
@@ -95,11 +95,11 @@ class TestConversion(unittest.TestCase):
 
         addr = Address.from_string('regtest:qr4pqy6q4cy2d50zpaek57nnrja7289fksjm6es9se')
         # The address should take the same case as the specified prefix
-        self.assertEqual(addr.cash_address(prefix="SLP"),
+        self.assertEqual(addr.to_cash_address(prefix="SLP"),
                          'SLP:QR4PQY6Q4CY2D50ZPAEK57NNRJA7289FKSWF89PY2G')
         # Do not allow mixed-case prefixes
         with self.assertRaises(InvalidAddress):
-            addr.cash_address(prefix="sLp")
+            addr.to_cash_address(prefix="sLp")
 
 
 class TestGuessPrefix(unittest.TestCase):

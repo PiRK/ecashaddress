@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+from typing import Optional
 import sys
+import warnings
 
 from ecashaddress.crypto import *
 from ecashaddress.base58 import b58decode_check, b58encode_check
@@ -48,10 +50,24 @@ class Address:
         return 'version: {}\npayload: {}\nprefix: {}'.format(self.version, self.payload, self.prefix)
 
     def legacy_address(self):
+        warnings.warn(
+            "legacy_address is deprecated, use to_legacy_address instead",
+            DeprecationWarning
+        )
+        return self.to_legacy_address()
+
+    def to_legacy_address(self) -> str:
         version_int = Address._address_type('legacy', self.version)[1]
         return b58encode_check(Address.code_list_to_string([version_int] + self.payload))
 
     def cash_address(self, prefix=None):
+        warnings.warn(
+            "cash_address is deprecated, use to_cash_address instead",
+            DeprecationWarning
+        )
+        return self.to_cash_address(prefix)
+
+    def to_cash_address(self, prefix: Optional[str] = None) -> str:
         prefix = prefix if prefix is not None else self.prefix
         self._check_case(prefix)
         is_uppercase = prefix == prefix.upper()
@@ -133,11 +149,11 @@ class Address:
 
 
 def to_cash_address(address):
-    return Address.from_string(address).cash_address()
+    return Address.from_string(address).to_cash_address()
 
 
 def to_legacy_address(address):
-    return Address.from_string(address).legacy_address()
+    return Address.from_string(address).to_legacy_address()
 
 
 def is_valid(address):

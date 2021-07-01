@@ -40,19 +40,19 @@ Then you can convert your address via:
 
 .. code:: python
 
-    address = Address.from_string("155fzsEBHy9Ri2bMQ8uuuR3tv1YzcDywd4").cash_address()
+    address = Address.from_string("155fzsEBHy9Ri2bMQ8uuuR3tv1YzcDywd4").to_cash_address()
 
 or
 
 .. code:: python
 
-    address = Address.from_string("ecash:qqkv9wr69ry2p9l53lxp635va4h86wv435ugq9umvq").legacy_address()
+    address = Address.from_string("ecash:qqkv9wr69ry2p9l53lxp635va4h86wv435ugq9umvq").to_legacy_address()
 
 You can convert between different *CashAddr* prefixes:
 
 .. code:: python
 
-    address = Address.from_string("ecash:qqkv9wr69ry2p9l53lxp635va4h86wv435ugq9umvq").cash_address(prefix="foobar")
+    address = Address.from_string("ecash:qqkv9wr69ry2p9l53lxp635va4h86wv435ugq9umvq").to_cash_address(prefix="foobar")
 
 Validating address
 ~~~~~~~~~~~~~~~~~~
@@ -130,7 +130,7 @@ Development
 
        git checkout -b my_dev_branch
        # do your stuff
-       python ecashaddress.tests.test
+       python -m ecashaddress.tests.test
        git commit
 
 6. Push you branch to your fork of the repository.
