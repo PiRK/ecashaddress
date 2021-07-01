@@ -13,7 +13,7 @@ PRERELEASE_NORMALIZED_NAME = {"dev": "a",
 
 MAJOR = 1
 MINOR = 1
-MICRO = 0
+MICRO = 1
 
 RELEV: str = "dev"
 """RELEV must be 'dev' on the master branch, and can be "alpha", "beta",
