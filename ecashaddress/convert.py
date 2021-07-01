@@ -6,6 +6,10 @@ from ecashaddress.crypto import *
 from ecashaddress.base58 import b58decode_check, b58encode_check
 
 
+KNOWN_PREFIXES = ["ecash", "bitcoincash", "etoken", "simpleledger",
+                  "ectest", "bchtest", "ecreg", "bchreg"]
+
+
 class InvalidAddress(Exception):
     pass
 
@@ -142,3 +146,37 @@ def is_valid(address):
         return True
     except InvalidAddress:
         return False
+
+
+def guess_prefix(cashaddress: str) -> str:
+    """Return the lower-case prefix.
+
+    If the prefix is not specified in the input address, a list of usual
+    prefixes is tried and this function returns the first one that matches.
+
+    If the specified prefix does not match the checksum, an InvalidAddress
+    error is raised.
+    If the prefix is omitted and no known prefix matches the checksum, an
+    empty string is returned.
+    """
+    if ':' in cashaddress:
+        try:
+            addr = Address.from_cash_string(cashaddress)
+        except InvalidAddress:
+            raise
+        else:
+            return addr.prefix
+
+    known_prefixes = []
+    for prefix in KNOWN_PREFIXES:
+        known_prefixes.append(prefix.lower())
+        known_prefixes.append(prefix.upper())
+
+    for prefix in known_prefixes:
+        try:
+            Address.from_cash_string(prefix + ":" + cashaddress)
+        except InvalidAddress:
+            pass
+        else:
+            return prefix
+    return ""
